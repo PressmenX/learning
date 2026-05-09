@@ -1,19 +1,15 @@
-// 1. Melihat info lokasi
-console.log("Lokasi Folder saat ini:", __dirname);
-console.log("Nama File saat ini:", __filename);
+const checkServer = () => (new Promise((res, rej)=> {
+    setTimeout(() => res("Server on"), 1500);
+}))
 
-// 2. Mengambil data dari terminal (argv)
-const username = process.argv[2] || "Guest";
-console.log(`Halo, ${username}!`);
-
-// 3. Melihat penggunaan memori sistem (RAM) oleh Node.js
-const memoryUsage = process.memoryUsage().heapUsed / 1024 / 1024;
-console.log(`Aplikasi ini menggunakan RAM sebesar: ${memoryUsage.toFixed(2)} MB`);
-
-// 4. Logika penutupan otomatis (Control Panel)
-if (process.argv[3] === "stop") {
-    console.log("Perintah stop diterima. Mematikan sistem...");
-    process.exit();
+const initialization = async () => {
+    try {
+        const data = await checkServer()
+        if (!data) throw new Error("Error:Failed to get Data");
+        console.log(data);
+    } catch (err) {
+        console.log(err);
+    }
 }
 
-console.log("Sistem terus berjalan karena tidak ada perintah stop.");
+initialization()
