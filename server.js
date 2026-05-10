@@ -1,16 +1,12 @@
-const http = require("http");
-const os = require("os")
 
-const server = http.createServer((req, res) => {
-  if (req.url === "/status") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(`<h1>Server ${os.hostname} Time : ${new Date().toLocaleTimeString()}</h1>`);
-  } else {
-    res.writeHead(404, { "content-type": "text/plain" });
-    res.end("Silakan akses /status");
-  }
-});
+process.on("uncaughtException", (err)=> console.log(`Terdeteksi Error: ${err.message}`) )
+process.on("unhandledRejection", (reason, promise)=> console.log(`Error Promise : ${reason} - ${promise}`))
 
-server.listen(5000, () => {
-  console.log("Server sedang berjalan di http://localhost:5000/status");
-});
+const readData = () => {
+  console.log(10/angkaGaib);
+}
+
+const reject = () => new Promise((_,reject) => reject("Data ditolak"))
+
+reject()
+console.log("Selesai");
