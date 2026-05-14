@@ -13,12 +13,12 @@ function imageParser(filepath: string): void {
     const buffer = Buffer.alloc(24);
     fs.readSync(fd, buffer, 0, 24, 0);
 
-    const notPng = buffer.toString("utf-8", 1, 4) !== "PNG";
+    const notPng = buffer.readInt32BE(0) === 0x89504E47 && buffer.readInt32BE(4) === 0x0D0A1A0A;
     if (notPng) throw new Error("file extension is not png");
 
     console.log("--------------------------------");
     console.log(
-      `File name : ${FILE_NAME}\nSize : ${Math.floor(stat.size/ 1024)} KB\nWidth : ${buffer.readInt32BE(16)} px\nHeight : ${buffer.readInt32BE(20)} px`,
+      `File name : ${FILE_NAME}\nSize : ${Math.floor(stat.size/ 1024)} KB\nWidth : ${buffer.readUInt32BE(16)} px\nHeight : ${buffer.readUInt32BE(20)} px`,
     );
     console.log("--------------------------------");
   } catch (err: unknown) {
