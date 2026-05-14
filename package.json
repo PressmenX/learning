@@ -14,8 +14,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node log-rotator.ts",
-    "watch": "tsx watch log-rotator.ts"
+    "start": "ts-node ts/image-parser.ts",
+    "watch": "tsx watch ts/image-parser.ts"
   },
   "repository": {
     "type": "git",
