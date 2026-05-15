@@ -1,6 +1,19 @@
-import fs from "node:fs"
-import path from "node:path";
+import { spawn } from "node:child_process";
+// Menjalankan perintah: echo "Halo dari Node.js"
+// Di Windows/Mac/Linux perintah 'echo' berfungsi mencetak teks
+const prosesEcho = spawn('ls', ['publc']);
 
-const image = path.join(import.meta.dirname, "public", "image.png")
-const buf = fs.readFileSync(image)
-console.log(buf.length);
+// 1. Ambil data hasil perintah (stdout)
+prosesEcho.stdout.on('data', (data) => {
+    console.log(`Hasil Perintah: ${data}`);
+});
+
+// 2. Tangkap jika ada error dari sistem (stderr)
+prosesEcho.stderr.on('data', (data) => {
+    console.error(`Terjadi Error: ${data.toString()}`);
+});
+
+// 3. Deteksi saat perintah selesai berjalan
+prosesEcho.on('close', (code) => {
+    console.log(`Proses selesai dengan kode keluar: ${code}`);
+});
