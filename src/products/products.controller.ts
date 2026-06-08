@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { CreateProductDTO } from 'src/dto/createProduct.dto';
+import { CreateProductDTO } from 'src/products/dto/createProduct.dto';
 import { ApiKeyGuard } from 'src/guard/api-key/api-key.guard';
 
 @Controller('products')
