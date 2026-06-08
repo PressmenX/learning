@@ -1,10 +1,18 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
+  constructor(private readonly productsService: ProductsService) {}
+
   @Get()
   getAll() {
-    return 'List of all products';
+    const result = this.productsService.findAll();
+    return {
+      status: 'succes',
+      message: 'Retrieved succesfully',
+      data: result,
+    };
   }
 
   @Get(':id')
@@ -13,11 +21,12 @@ export class ProductsController {
   }
 
   @Post()
-  create(@Body() payload: unknown) {
+  create(@Body() payload: Record<string, unknown>) {
+    const result = this.productsService.create(payload);
     return {
       status: 'succes',
       message: 'Created succesfully',
-      data: payload ?? null,
+      data: result ?? null,
     };
   }
 }
