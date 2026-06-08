@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { CreateProductDTO } from 'src/dto/createProduct.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -21,7 +22,7 @@ export class ProductsController {
   }
 
   @Post()
-  create(@Body() payload: Record<string, unknown>) {
+  create(@Body() payload: CreateProductDTO) {
     const result = this.productsService.create(payload);
     return {
       status: 'succes',

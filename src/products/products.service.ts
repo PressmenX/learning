@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
-
-export type Payload = Record<string, unknown>;
+import { CreateProductDTO } from 'src/dto/createProduct.dto';
 
 @Injectable()
 export class ProductsService {
-  private products: Payload[] = [];
+  private products: CreateProductDTO[] = [];
 
   findAll() {
     return this.products;
   }
 
-  create(product: Payload) {
+  create(product: CreateProductDTO) {
     this.products.push(product);
     return product;
   }
