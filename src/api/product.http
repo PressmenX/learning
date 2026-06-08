@@ -1,0 +1,17 @@
+@url = http://localhost:3000/products
+GET {{url}}
+
+###
+
+GET {{url}}/1
+
+###
+
+POST {{url}}
+Content-Type: application/json
+
+{
+  "name" : "Milk",
+  "price" : 6000,
+  "stock" : 12
+}
