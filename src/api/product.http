@@ -1,14 +1,18 @@
 @url = http://localhost:3000/products
 GET {{url}}
+x-api-key: secret123
 
 ###
 
 GET {{url}}/1
+x-api-key: secret123
+
 
 ###
 
 POST {{url}}
 Content-Type: application/json
+x-api-key: secret123
 
 {
   "name" : "Milk",
