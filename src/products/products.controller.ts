@@ -1,16 +1,20 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ProductsService } from './products.service';
 import { CreateProductDTO } from 'src/products/dto/createProduct.dto';
 import { ApiKeyGuard } from 'src/guard/api-key/api-key.guard';
+import { CreateProductUseCase } from './use-cases/create-product.use-case';
+import { GetAllProductUseCase } from './use-cases/get-all-product.use-case';
 
 @Controller('products')
 @UseGuards(ApiKeyGuard)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly createProductUseCase: CreateProductUseCase,
+    private readonly getAllProductUseCase: GetAllProductUseCase,
+  ) {}
 
   @Get()
   getAll() {
-    return this.productsService.findAll();
+    return this.getAllProductUseCase.execute();
   }
 
   @Get(':id')
@@ -20,6 +24,6 @@ export class ProductsController {
 
   @Post()
   create(@Body() payload: CreateProductDTO) {
-    return this.productsService.create(payload);
+    return this.createProductUseCase.execute(payload);
   }
 }
