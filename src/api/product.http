@@ -1,4 +1,4 @@
-@url = http://localhost:3000/products
+@url = http://localhost:3030/products
 GET {{url}}
 x-api-key: secret123
 
