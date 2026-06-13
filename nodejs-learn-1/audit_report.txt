@@ -1,9 +1,0 @@
-
-Audit Report - 5/11/2026, 7:19:48 PM
-------------------------------------------
-Nama Auditor        : Daffa221277
-File Terkecil       : low_file.txt (5 bytes)
-File Terbesar       : big_file.txt (46.62405586242676 mb)
-CPU Model           : Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
-RAM Yang Digunakan  : 1.91 GB
-------------------------------------------
