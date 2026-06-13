@@ -3,7 +3,10 @@ import { CreateProductDTO } from 'src/products/dto/createProduct.dto';
 import { ApiKeyGuard } from 'src/guard/api-key/api-key.guard';
 import { CreateProductUseCase } from './use-cases/create-product.use-case';
 import { GetAllProductUseCase } from './use-cases/get-all-product.use-case';
+import { ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
+@ApiSecurity('api-key')
 @Controller('products')
 @UseGuards(ApiKeyGuard)
 export class ProductsController {
@@ -13,16 +16,28 @@ export class ProductsController {
   ) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'Data retrieved successful',
+  })
   getAll() {
     return this.getAllProductUseCase.execute();
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Data retrieved successful',
+  })
   getById(@Param('id') id: string) {
     return `Product id ${id}`;
   }
 
   @Post()
+  @ApiResponse({
+    status: 201,
+    description: 'Data created successful',
+  })
   create(@Body() payload: CreateProductDTO) {
     return this.createProductUseCase.execute(payload);
   }

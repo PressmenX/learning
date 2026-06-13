@@ -5,6 +5,7 @@ import { HttpExceptionFilter } from './filters/http-exception/http-exception.fil
 import { TransformInterceptor } from './interceptors/transform/transform.interceptor';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
+import { setupSwagger } from './common/config/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -12,6 +13,8 @@ async function bootstrap() {
   const port = configService.get<number>('PORT');
 
   app.useLogger(app.get(Logger));
+  setupSwagger(app);
+
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
