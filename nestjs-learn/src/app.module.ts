@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import envSchema from './common/config/env.schema';
 import { LoggerModule } from 'nestjs-pino';
 import { pinoConfigAsync } from './common/config/pino.config';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { pinoConfigAsync } from './common/config/pino.config';
       validate: (config) => envSchema.parse(config),
     }),
     LoggerModule.forRootAsync(pinoConfigAsync),
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -19,6 +19,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  app.enableShutdownHooks();
   await app.listen(port ?? 3000);
 }
 bootstrap();
