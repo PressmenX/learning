@@ -2,9 +2,10 @@
 
 POST {{url}}
 Content-Type: application/json
+x-api-key : secret123
 
 {
   "id" : "b-2",
   "name" : "The Light",
-  "authorId" : "a-2"
+  "authorId" : "a-3"
 }
