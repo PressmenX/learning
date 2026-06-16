@@ -1,0 +1,10 @@
+@url = http://localhost:3030/books
+
+POST {{url}}
+Content-Type: application/json
+
+{
+  "id" : "b-2",
+  "name" : "The Light",
+  "authorId" : "a-2"
+}

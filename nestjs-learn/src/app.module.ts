@@ -7,6 +7,8 @@ import envSchema from './common/config/env.schema';
 import { LoggerModule } from 'nestjs-pino';
 import { pinoConfigAsync } from './common/config/pino.config';
 import { HealthModule } from './health/health.module';
+import { AuthorModule } from './author/author.module';
+import { BookModule } from './book/book.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { HealthModule } from './health/health.module';
     }),
     LoggerModule.forRootAsync(pinoConfigAsync),
     HealthModule,
+    AuthorModule,
+    BookModule,
   ],
   controllers: [AppController],
   providers: [AppService],
