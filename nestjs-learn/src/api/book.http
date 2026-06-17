@@ -5,7 +5,7 @@ Content-Type: application/json
 x-api-key : secret123
 
 {
-  "id" : "b-2",
+  "id" : "a-1",
   "name" : "The Light",
-  "authorId" : "a-3"
+  "authorId" : "a-2"
 }

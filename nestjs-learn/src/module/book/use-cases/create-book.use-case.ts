@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { type IBookRepository } from '../book.repository';
-import { GetByAuthorIdUseCase } from 'src/author/use-cases/get-by-author-id.use-case';
+import { GetByAuthorIdUseCase } from '../../author/use-cases/get-by-author-id.use-case';
 import { CreateBookDTO } from '../dto/createBook.dto';
 
 @Injectable()

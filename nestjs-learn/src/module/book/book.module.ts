@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MockBookRepository } from './book.repository';
-import { AuthorModule } from 'src/author/author.module';
+import { AuthorModule } from '../author/author.module';
 import { CreateBookUseCase } from './use-cases/create-book.use-case';
 import { BookController } from './book.controller';
 

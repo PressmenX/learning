@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { CreateProductDTO } from 'src/products/dto/createProduct.dto';
-import { ApiKeyGuard } from 'src/guard/api-key/api-key.guard';
+import { ApiKeyGuard } from '../../guard/api-key/api-key.guard';
 import { CreateProductUseCase } from './use-cases/create-product.use-case';
 import { GetAllProductUseCase } from './use-cases/get-all-product.use-case';
 import { ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { CreateProductDTO } from './dto/createProduct.dto';
 
 @ApiTags('Products')
 @ApiSecurity('api-key')
