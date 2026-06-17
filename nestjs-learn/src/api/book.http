@@ -2,7 +2,7 @@
 
 POST {{url}}
 Content-Type: application/json
-x-api-key : secret123
+x-api-key : se76cret123
 
 {
   "id" : "a-1",
