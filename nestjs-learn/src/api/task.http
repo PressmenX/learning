@@ -1,1 +1,9 @@
 @url = http://localhost:3030/tasks
+
+POST {{url}}
+Content-Type: application/json
+
+{
+  "title" : "Reading a book",
+  "priority" : "low "
+}

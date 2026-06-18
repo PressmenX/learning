@@ -1,7 +1,17 @@
 import { Module } from '@nestjs/common';
-import { CreateTaskUseCaseService } from './use-case/create-task.use-case';
+import { TasksController } from './tasks.controller';
+import { CreateTaskUseCase } from './use-cases/create-task.use-case';
+import { TaskRepositoryAbstract } from './interfaces/tasks.repository.abstract';
+import { MockTasksRepository } from './tasks.repository';
 
 @Module({
-  providers: [CreateTaskUseCaseService]
+  controllers: [TasksController],
+  providers: [
+    CreateTaskUseCase,
+    {
+      provide: TaskRepositoryAbstract,
+      useClass: MockTasksRepository,
+    },
+  ],
 })
 export class TasksModule {}
