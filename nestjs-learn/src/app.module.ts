@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductsModule } from './module/products/products.module';
+import { ProductsModule } from './modules/products/products.module';
 import { ConfigModule } from '@nestjs/config';
 import envSchema from './common/config/env.schema';
 import { LoggerModule } from 'nestjs-pino';
 import { pinoConfigAsync } from './common/config/pino.config';
-import { HealthModule } from './module/health/health.module';
-import { AuthorModule } from './module/author/author.module';
-import { BookModule } from './module/book/book.module';
+import { HealthModule } from './modules/health/health.module';
+import { AuthorModule } from './modules/author/author.module';
+import { BookModule } from './modules/book/book.module';
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BookModule } from './module/book/book.module';
     HealthModule,
     AuthorModule,
     BookModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
