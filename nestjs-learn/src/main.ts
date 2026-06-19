@@ -15,7 +15,7 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
   setupSwagger(app);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
 

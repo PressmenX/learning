@@ -1,5 +1,5 @@
-import { CreateTaskDTO } from '../dto/create-task.dto';
+import { ITasks } from './tasks.interface';
 
 export abstract class TaskRepositoryAbstract {
-  abstract save(payload: CreateTaskDTO): CreateTaskDTO;
+  abstract save(payload: ITasks): ITasks;
 }

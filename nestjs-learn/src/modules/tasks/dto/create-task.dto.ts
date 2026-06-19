@@ -7,12 +7,8 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
+import { TaskPriority } from '../enums/task-priority.enum';
 
-export enum TaskPriority {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-}
 export class CreateTaskDTO {
   @ApiProperty({ example: 'Fix login bug', minLength: 3 })
   @IsString({ message: 'The title must be a string' })
@@ -21,9 +17,6 @@ export class CreateTaskDTO {
   title!: string;
 
   @ApiPropertyOptional({ example: 'Users cannot log in using Google Auth' })
-  @Transform(({ value }: { value: unknown }) =>
-    typeof value === 'string' ? value.trim().toUpperCase() : value,
-  )
   @IsString({ message: 'The description must be a string' })
   @IsOptional()
   description?: string;
@@ -32,6 +25,9 @@ export class CreateTaskDTO {
     enum: TaskPriority,
     example: TaskPriority.MEDIUM,
   })
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.trim().toLowerCase() : value,
+  )
   @IsEnum(TaskPriority, {
     message: 'Priority must be either low, medium, or high',
   })

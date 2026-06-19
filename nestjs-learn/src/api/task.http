@@ -5,5 +5,5 @@ Content-Type: application/json
 
 {
   "title" : "Reading a book",
-  "priority" : "low "
+  "priority" : "low"
 }
