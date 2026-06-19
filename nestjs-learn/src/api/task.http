@@ -1,5 +1,6 @@
 @url = http://localhost:3030/tasks
 
+# @name createTask
 POST {{url}}
 Content-Type: application/json
 
@@ -8,3 +9,7 @@ Content-Type: application/json
   "priority" : " lOw ",
   "status" : "completed"
 }
+###
+
+DELETE {{url}}/{{createTask.response.body.result.id}}
+x-roles: "admin"

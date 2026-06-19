@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CreateBookUseCase } from './use-cases/create-book.use-case';
 import { CreateBookDTO } from './dto/createBook.dto';
-import { ApiKeyGuard } from 'src/guard/api-key/api-key.guard';
+import { ApiKeyGuard } from 'src/guard/api-key.guard';
 import {
   ApiOperation,
   ApiResponse,

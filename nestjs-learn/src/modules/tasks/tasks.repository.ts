@@ -10,4 +10,12 @@ export class MockTasksRepository extends TaskRepositoryAbstract {
     this.tasks.push(payload);
     return payload;
   }
+
+  remove(id: string): boolean {
+    const index = this.tasks.findIndex((task) => task.id === id);
+    if (index === -1) return false;
+
+    this.tasks.splice(index, 1);
+    return true;
+  }
 }

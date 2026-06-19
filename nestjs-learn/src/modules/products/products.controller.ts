@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiKeyGuard } from '../../guard/api-key/api-key.guard';
+import { ApiKeyGuard } from '../../guard/api-key.guard';
 import { CreateProductUseCase } from './use-cases/create-product.use-case';
 import { GetAllProductUseCase } from './use-cases/get-all-product.use-case';
 import { ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
