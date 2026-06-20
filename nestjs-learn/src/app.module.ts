@@ -10,6 +10,7 @@ import { HealthModule } from './modules/health/health.module';
 import { AuthorModule } from './modules/author/author.module';
 import { BookModule } from './modules/book/book.module';
 import { TasksModule } from './modules/tasks/tasks.module';
+import { InventoryModule } from './modules/inventory/inventory.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
     AuthorModule,
     BookModule,
     TasksModule,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

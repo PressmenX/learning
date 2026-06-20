@@ -1,0 +1,8 @@
+@url = http://localhost:3030/inventory
+
+PATCH {{url}}/add/i-a2
+Content-Type: application/json
+
+{
+  "quantity" : 8
+}
