@@ -2,7 +2,7 @@ import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { IInventory } from './interfaces/inventory.interface';
 import { InventoryRepositoryAbstract } from './interfaces/inventory.repository.abstract';
 
-export class MockInvetoryRepository implements InventoryRepositoryAbstract {
+export class MockInventoryRepository implements InventoryRepositoryAbstract {
   private inventories: IInventory[] = [
     { id: 'i-a1', name: 'Milk', stock: 12 },
     { id: 'i-a2', name: 'Coffe', stock: 4 },
@@ -15,15 +15,16 @@ export class MockInvetoryRepository implements InventoryRepositoryAbstract {
   }
 
   update(id: string, changes: Partial<CreateInventoryDto>): IInventory | null {
-    const item = this.inventories.find((i) => i.id === id);
-    if (!item) return null;
+    const index = this.inventories.findIndex((i) => i.id === id);
+    if (index === -1) return null;
 
-    const updatedItem = {
-      ...item,
+    const existingitem = this.inventories[index];
+    this.inventories[index] = {
+      ...existingitem,
       ...changes,
       id,
     };
 
-    return updatedItem;
+    return this.inventories[index];
   }
 }

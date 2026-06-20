@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { InventoryController } from './inventory.controller';
 import { InventoryRepositoryAbstract } from './interfaces/inventory.repository.abstract';
-import { MockInvetoryRepository } from './invetory.repository';
+import { MockInventoryRepository } from './invetory.repository';
 import { AddStockUseCase } from './use-cases/add-stock.use-case';
 
 @Module({
@@ -9,7 +9,7 @@ import { AddStockUseCase } from './use-cases/add-stock.use-case';
   providers: [
     {
       provide: InventoryRepositoryAbstract,
-      useClass: MockInvetoryRepository,
+      useClass: MockInventoryRepository,
     },
     AddStockUseCase,
   ],

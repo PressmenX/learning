@@ -1,8 +1,7 @@
-import { IsNotEmpty, IsPositive, Min } from 'class-validator';
+import { IsInt, IsPositive } from 'class-validator';
 
 export class StockQuantityDto {
-  @IsNotEmpty()
-  @IsPositive({ message: 'Stock must have a positive value' })
-  @Min(0, { message: 'Invalid stock value' })
+  @IsInt({ message: 'Quantity must be a whole number' })
+  @IsPositive({ message: 'Quantity must have a positive value' })
   quantity!: number;
 }

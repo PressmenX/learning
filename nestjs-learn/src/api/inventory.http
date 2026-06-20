@@ -4,5 +4,6 @@ PATCH {{url}}/add/i-a2
 Content-Type: application/json
 
 {
-  "quantity" : 8
+  "quantity" : 7,
+  "name" : "Tea"
 }
