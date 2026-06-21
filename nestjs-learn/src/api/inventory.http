@@ -14,6 +14,6 @@ PATCH {{url}}/i-a2/withdraw
 Content-Type: application/json
 
 {
-  "quantity" : 0,
+  "quantity" : 1,
   "name" : "Tea"
 }

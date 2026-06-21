@@ -1,4 +1,5 @@
 import { ConfigService } from '@nestjs/config';
+import { Request, Response } from 'express';
 import { LoggerModuleAsyncParams, Params } from 'nestjs-pino';
 
 export const pinoConfigAsync: LoggerModuleAsyncParams = {
@@ -16,6 +17,15 @@ export const pinoConfigAsync: LoggerModuleAsyncParams = {
               options: { colorize: true },
             }
           : undefined,
+        serializers: {
+          req: (req: Request) => ({
+            method: req.method,
+            url: req.url,
+          }),
+          res: (res: Response) => ({
+            statusCode: res.statusCode,
+          }),
+        },
       },
     };
   },
