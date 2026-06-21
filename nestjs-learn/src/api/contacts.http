@@ -17,3 +17,17 @@ GET {{url}}
 ### 
 
 GET {{url}}/{{createContact.response.body.result.id}}
+
+###
+
+PUT {{url}}/con-oOOFBoXLELGOBJAgcxBLa
+Content-Type: application/json
+
+{
+   "name" : "Budi",
+  "label" : "Family"
+}
+
+###
+
+DELETE {{url}}/con-AWpHKgWBPtXUITR2DXWRa

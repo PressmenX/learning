@@ -5,6 +5,8 @@ import { MockContactsRepository } from './contacts.repository';
 import { GetAllContactUseCase } from './use-cases/get-all-contact.use-case';
 import { GetByContactIdUseCase } from './use-cases/get-by-contact-id.use-case';
 import { CreateContactUseCase } from './use-cases/create-contact.use-case';
+import { UpdateContactUseCase } from './use-cases/update-contact.use-case';
+import { DeleteContactUseCase } from './use-cases/delete-contact.use-case';
 
 @Module({
   controllers: [ContactsController],
@@ -16,6 +18,8 @@ import { CreateContactUseCase } from './use-cases/create-contact.use-case';
     GetAllContactUseCase,
     GetByContactIdUseCase,
     CreateContactUseCase,
+    UpdateContactUseCase,
+    DeleteContactUseCase,
   ],
 })
 export class ContactsModule {}
