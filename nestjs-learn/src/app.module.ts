@@ -11,6 +11,7 @@ import { AuthorModule } from './modules/author/author.module';
 import { BookModule } from './modules/book/book.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
+import { ContactsModule } from './modules/contacts/contacts.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { InventoryModule } from './modules/inventory/inventory.module';
     BookModule,
     TasksModule,
     InventoryModule,
+    ContactsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

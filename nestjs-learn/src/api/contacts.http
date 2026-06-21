@@ -1,0 +1,19 @@
+@url = http://localhost:3030/contacts
+
+# @name createContact
+POST {{url}}
+Content-Type: application/json
+
+{
+  "id" : "a-1",
+  "name" : "Joko",
+  "phoneNumber" : "+62821456671829",
+  "label" : "Partner"
+}
+
+###
+GET {{url}}
+
+### 
+
+GET {{url}}/{{createContact.response.body.result.id}}
