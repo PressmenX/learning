@@ -11,26 +11,31 @@ const prisma = new PrismaClient({
 const main = async () => {
   console.log("Prisma connection successfully connected");
 
-  await prisma.$transaction(async (tx) => {
-    const newUser = await tx.user.create({
-      data: {
-        name: "Ahmad",
-        email: "ahmad123@gmail.com",
-      },
-    });
+  // await prisma.$transaction(async (tx) => {
+  //   const newUser = await tx.user.create({
+  //     data: {
+  //       name: "Ahmad",
+  //       email: "ahmad123@gmail.com",
+  //     },
+  //   });
 
-    const newPost = await tx.post.create({
-      data: {
-        title: "Post pertama Ahmad",
-        author_id: newUser.id,
-      },
-    });
+  //   const newPost = await tx.post.create({
+  //     data: {
+  //       title: "Post pertama Ahmad",
+  //       author_id: newUser.id,
+  //     },
+  //   });
 
-    console.log("Transaction has been successful : ", newUser, newPost);
+  //   console.log("Transaction has been successful : ", newUser, newPost);
+  // });
+
+  const allUser = await prisma.user.findMany({
+    where: {id : 1},
+    include: {
+      Post: true,
+    },
   });
-
-  const allUsers = await prisma.user.findMany();
-  console.log(allUsers);
+  console.dir(allUser, { depth: null });
 };
 
 main()
