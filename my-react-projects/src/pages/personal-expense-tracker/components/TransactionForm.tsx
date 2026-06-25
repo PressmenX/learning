@@ -17,7 +17,6 @@ export default function TransactionForm({
   });
 
   const handleChange = (
-
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
@@ -35,6 +34,12 @@ export default function TransactionForm({
     }
 
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleTransactionTypeBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { value } = e.currentTarget;
+    const txType = value === "income" ? "income" : "expense";
+    setFormData((prev) => ({ ...prev, type: txType }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -142,13 +147,17 @@ export default function TransactionForm({
           <span className="label">Transaction Type</span>
           <div className="flex gap-2">
             <button
+              value={"income"}
               type="button"
+              onClick={handleTransactionTypeBtn}
               className={`btn btn-sm flex-1 ${formData.type === "income" ? "bg-income text-income-subtle" : "btn-outline"}`}
             >
               Income
             </button>
             <button
+              value={"expense"}
               type="button"
+              onClick={handleTransactionTypeBtn}
               className={`btn btn-sm flex-1 ${formData.type === "expense" ? "bg-expense text-expense-subtle" : "btn-outline"}`}
             >
               Expense
@@ -156,23 +165,25 @@ export default function TransactionForm({
           </div>
         </div>
 
-        {import.meta.env.DEV  && <>
-          <span className="label">Auto-fill form data</span>
-          <div className="flex gap-2">
-            <AutoFillButton<Transaction>
-              onFillData={setFormData}
-              data={fillDataExpense}
-              title="Autofill expense"
-              className="btn-outline text-expense flex-1"
-            />
-            <AutoFillButton<Transaction>
-              onFillData={setFormData}
-              data={fillDataIncome}
-              title="Autofill income"
-              className="btn-outline text-income flex-1"
-            />
-          </div>
-        </>}
+        {import.meta.env.DEV && (
+          <>
+            <span className="label">Auto-fill form data (dev-only)</span>
+            <div className="flex gap-2">
+              <AutoFillButton<Transaction>
+                onFillData={setFormData}
+                data={fillDataIncome}
+                title="Autofill income"
+                className="btn-outline text-income flex-1"
+              />
+              <AutoFillButton<Transaction>
+                onFillData={setFormData}
+                data={fillDataExpense}
+                title="Autofill expense"
+                className="btn-outline text-expense flex-1"
+              />
+            </div>
+          </>
+        )}
       </fieldset>
 
       <button type="submit" className="btn btn-neutral">
