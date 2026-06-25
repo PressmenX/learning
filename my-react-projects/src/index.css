@@ -1,4 +1,23 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default;
+  themes:
+    light --default,
+    dark;
+}
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"]*));
+
+@theme {
+  --color-income: #22c55e;
+  --color-income-subtle: #f0fdf4;
+
+  --color-expense: #ef4444;
+  --color-expense-subtle: #fef2f2;
+}
+
+html[data-theme="dark"] {
+  --color-income: #4ade80;
+  --color-income-subtle: #052e16;
+
+  --color-expense: #f87171;
+  --color-expense-subtle: #451a03;
 }
