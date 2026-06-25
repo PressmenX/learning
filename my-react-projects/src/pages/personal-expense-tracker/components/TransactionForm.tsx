@@ -3,8 +3,11 @@ import {
   CATEGORY_OPTIONS,
   type Transaction,
 } from "../interfaces/transaction.interface";
+import type { TransactionFormProps } from "../interfaces/transaction-form-props.interface";
 
-export default function TransactionForm() {
+export default function TransactionForm({
+  onAddTransaction,
+}: TransactionFormProps) {
   const [formData, setFormData] = useState<Transaction>({
     name: "",
     amount: "",
@@ -32,8 +35,24 @@ export default function TransactionForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setFormData({
+      name: "",
+      amount: "",
+      category: "",
+      type: "expense",
+    });
+
+    onAddTransaction({ ...formData, amount: Number(formData.amount) });
+  };
+
   return (
-    <form className="grid bg-base-200 border-base-300 rounded-box w-xs border p-4 shadow-md">
+    <form
+      onSubmit={handleSubmit}
+      className="grid bg-base-200 border-base-300 rounded-box w-xs border p-4 shadow-md"
+    >
       <fieldset className="fieldset my-2 gap-4">
         <legend className="fieldset-legend text-center font-bold text-sm">
           Add Transaction
@@ -54,7 +73,9 @@ export default function TransactionForm() {
             required
             minLength={3}
           />
-          <span className="validator-hint">Name is required and must be at least 3 characters</span>
+          <span className="validator-hint">
+            Name is required and must be at least 3 characters
+          </span>
         </div>
 
         <div>
@@ -72,7 +93,9 @@ export default function TransactionForm() {
             required
             min={1}
           />
-          <span className="validator-hint">Amount is required and a minimum of 1</span>
+          <span className="validator-hint">
+            Amount is required and a minimum of 1
+          </span>
         </div>
 
         <div>
@@ -118,7 +141,7 @@ export default function TransactionForm() {
         </div>
       </fieldset>
 
-      <button type="submit" className="btn btn-neutral ">
+      <button type="submit" className="btn btn-neutral">
         Add
       </button>
     </form>

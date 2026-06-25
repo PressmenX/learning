@@ -1,9 +1,9 @@
-import TransactionForm from "./pages/personal-expense-tracker/components/TransactionForm";
+import PersonalExpenseTrackerPage from "./pages/personal-expense-tracker";
 
 function App() {
   return (
     <>
-      <TransactionForm />
+      <PersonalExpenseTrackerPage />
     </>
   );
 }
