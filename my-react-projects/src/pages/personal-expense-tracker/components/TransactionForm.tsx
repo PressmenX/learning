@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CATEGORY_OPTIONS,
   type Transaction,
@@ -17,6 +17,16 @@ export default function TransactionForm({
     category: "",
     type: "expense",
   });
+
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSubmitted(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [isSubmitted]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -54,6 +64,7 @@ export default function TransactionForm({
       type: "expense",
     });
 
+    setIsSubmitted(true)
     onAddTransaction({
       ...formData,
       amount: Number(formData.amount),
@@ -80,125 +91,156 @@ export default function TransactionForm({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="grid bg-base-200 border-base-300 rounded-box w-xs border p-4 shadow-md"
-    >
-      <fieldset className="fieldset my-2 gap-4">
-        <legend className="fieldset-legend text-center font-bold text-sm">
-          Add Transaction
-        </legend>
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="grid bg-base-200 border-base-300 rounded-box w-xs border p-4 shadow-md"
+      >
+        <fieldset className="fieldset my-2 gap-4">
+          <legend className="fieldset-legend text-center font-bold text-sm">
+            Add Transaction
+          </legend>
 
-        <div>
-          <label htmlFor="tx-name" className="label">
-            Name
-          </label>
-          <input
-            id="tx-name"
-            name="name"
-            type="text"
-            className="input validator"
-            placeholder="e.g., Buy a Burger"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            minLength={3}
-          />
-          <span className="validator-hint">
-            Name is required and must be at least 3 characters
-          </span>
-        </div>
+          <div>
+            <label htmlFor="tx-name" className="label">
+              Name
+            </label>
+            <input
+              id="tx-name"
+              name="name"
+              type="text"
+              className="input validator"
+              placeholder="e.g., Buy a Burger"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              minLength={3}
+            />
+            <span className="validator-hint">
+              Name is required and must be at least 3 characters
+            </span>
+          </div>
 
-        <div>
-          <label htmlFor="tx-amount" className="label">
-            Amount
-          </label>
-          <input
-            id="tx-amount"
-            name="amount"
-            type="text"
-            className="input validator"
-            placeholder="e.g., Rp 15.000"
-            value={formData.amount}
-            onChange={handleNumberChange}
-            required
-            min={1}
-          />
-          <span className="validator-hint">
-            Amount is required and a minimum of 1
-          </span>
-        </div>
+          <div>
+            <label htmlFor="tx-amount" className="label">
+              Amount
+            </label>
+            <input
+              id="tx-amount"
+              name="amount"
+              type="text"
+              className="input validator"
+              placeholder="e.g., Rp 15.000"
+              value={formData.amount}
+              onChange={handleNumberChange}
+              required
+              min={1}
+            />
+            <span className="validator-hint">
+              Amount is required and a minimum of 1
+            </span>
+          </div>
 
-        <div>
-          <label htmlFor="tx-category" className="label">
-            Category
-          </label>
-          <select
-            id="tx-category"
-            name="category"
-            className="select validator"
-            value={formData.category}
-            onChange={handleChange}
-            required
-          >
-            <option disabled={true} value={""}>
-              Pick a category
-            </option>
-            {CATEGORY_OPTIONS.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
+          <div>
+            <label htmlFor="tx-category" className="label">
+              Category
+            </label>
+            <select
+              id="tx-category"
+              name="category"
+              className="select validator"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option disabled={true} value={""}>
+                Pick a category
               </option>
-            ))}
-          </select>
-          <span className="validator-hint">Category is required</span>
-        </div>
+              {CATEGORY_OPTIONS.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+            <span className="validator-hint">Category is required</span>
+          </div>
 
-        <div>
-          <span className="label">Transaction Type</span>
-          <div className="flex gap-2">
-            <button
-              value={"income"}
-              type="button"
-              onClick={handleTransactionTypeBtn}
-              className={`btn btn-sm flex-1 ${formData.type === "income" ? "bg-income text-income-subtle" : "btn-outline"}`}
-            >
-              Income
-            </button>
-            <button
-              value={"expense"}
-              type="button"
-              onClick={handleTransactionTypeBtn}
-              className={`btn btn-sm flex-1 ${formData.type === "expense" ? "bg-expense text-expense-subtle" : "btn-outline"}`}
-            >
-              Expense
-            </button>
+          <div>
+            <span className="label">Transaction Type</span>
+            <div className="flex gap-2">
+              <button
+                value={"income"}
+                type="button"
+                onClick={handleTransactionTypeBtn}
+                className={`btn btn-sm flex-1 ${formData.type === "income" ? "bg-income text-income-subtle" : "btn-outline"}`}
+              >
+                Income
+              </button>
+              <button
+                value={"expense"}
+                type="button"
+                onClick={handleTransactionTypeBtn}
+                className={`btn btn-sm flex-1 ${formData.type === "expense" ? "bg-expense text-expense-subtle" : "btn-outline"}`}
+              >
+                Expense
+              </button>
+            </div>
+          </div>
+
+          {import.meta.env.DEV && (
+            <>
+              <span className="label">Auto-fill form data (dev-only)</span>
+              <div className="flex gap-2">
+                <AutoFillButton<TransactionWithoutDate>
+                  onFillData={setFormData}
+                  data={fillDataIncome}
+                  title="Autofill income"
+                  className="btn-outline text-income flex-1"
+                />
+                <AutoFillButton<TransactionWithoutDate>
+                  onFillData={setFormData}
+                  data={fillDataExpense}
+                  title="Autofill expense"
+                  className="btn-outline text-expense flex-1"
+                />
+              </div>
+            </>
+          )}
+        </fieldset>
+
+        <button type="submit" className="btn btn-neutral">
+          Add
+        </button>
+      </form>
+
+      {isSubmitted && (
+        <div className="toast toast-bottom toast-center z-50 p-4 min-w-xs">
+          <div className="flex items-center gap-3 bg-base-100 border border-base-300 shadow-md rounded-xl p-4">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-success/20 text-success">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="3"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold text-sm text-base-content">Success!</h3>
+              <p className="text-xs text-base-content/60">
+                Transaction has been added
+              </p>
+            </div>
           </div>
         </div>
-
-        {import.meta.env.DEV && (
-          <>
-            <span className="label">Auto-fill form data (dev-only)</span>
-            <div className="flex gap-2">
-              <AutoFillButton<TransactionWithoutDate>
-                onFillData={setFormData}
-                data={fillDataIncome}
-                title="Autofill income"
-                className="btn-outline text-income flex-1"
-              />
-              <AutoFillButton<TransactionWithoutDate>
-                onFillData={setFormData}
-                data={fillDataExpense}
-                title="Autofill expense"
-                className="btn-outline text-expense flex-1"
-              />
-            </div>
-          </>
-        )}
-      </fieldset>
-
-      <button type="submit" className="btn btn-neutral">
-        Add
-      </button>
-    </form>
+      )}
+    </>
   );
 }

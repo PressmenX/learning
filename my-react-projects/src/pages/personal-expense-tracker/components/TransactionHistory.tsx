@@ -43,7 +43,7 @@ export default function TransactionHistory({ data }: { data: Transaction[] }) {
                     </p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-xs text-base-content/50">
-                       {d.date}
+                        {d.date}
                       </span>
                       <span className="badge badge-xs badge-ghost text-base-content/70 py-1.5">
                         {d.category}
@@ -57,7 +57,7 @@ export default function TransactionHistory({ data }: { data: Transaction[] }) {
                     "text-expense/70": d.type === "expense",
                   })}
                 >
-                  {(d.type === "income" ? "+" : "-")+d.amount}
+                  {(d.type === "income" ? "+" : "-") + d.amount}
                 </span>
               </div>
             ))}
