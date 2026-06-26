@@ -11,6 +11,7 @@ export interface Transaction {
   amount: number | "";
   category: TransactionCategory | "";
   type: "income" | "expense";
+  date: string;
 }
 
 export const CATEGORY_OPTIONS: TransactionCategory[] = [

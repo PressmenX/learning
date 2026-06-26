@@ -6,10 +6,12 @@ import {
 import type { TransactionFormProps } from "../interfaces/transaction-form-props.interface";
 import AutoFillButton from "@/common/components/AutoFillButton";
 
+type TransactionWithoutDate = Omit<Transaction, "date">;
+
 export default function TransactionForm({
   onAddTransaction,
 }: TransactionFormProps) {
-  const [formData, setFormData] = useState<Transaction>({
+  const [formData, setFormData] = useState<TransactionWithoutDate>({
     name: "",
     amount: "",
     category: "",
@@ -52,17 +54,25 @@ export default function TransactionForm({
       type: "expense",
     });
 
-    onAddTransaction({ ...formData, amount: Number(formData.amount) });
+    onAddTransaction({
+      ...formData,
+      amount: Number(formData.amount),
+      date: new Date().toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+    });
   };
 
-  const fillDataExpense: Transaction = {
+  const fillDataExpense: TransactionWithoutDate = {
     name: "Buy pizza",
     amount: 6000,
     category: "Food",
     type: "expense",
   };
 
-  const fillDataIncome: Transaction = {
+  const fillDataIncome: TransactionWithoutDate = {
     name: "Pocket money from parents",
     amount: 10000,
     category: "Others",
