@@ -179,13 +179,13 @@ export default function TransactionForm({
           <>
             <span className="label">Auto-fill form data (dev-only)</span>
             <div className="flex gap-2">
-              <AutoFillButton<Transaction>
+              <AutoFillButton<TransactionWithoutDate>
                 onFillData={setFormData}
                 data={fillDataIncome}
                 title="Autofill income"
                 className="btn-outline text-income flex-1"
               />
-              <AutoFillButton<Transaction>
+              <AutoFillButton<TransactionWithoutDate>
                 onFillData={setFormData}
                 data={fillDataExpense}
                 title="Autofill expense"
