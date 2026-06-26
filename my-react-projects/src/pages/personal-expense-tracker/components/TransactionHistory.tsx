@@ -8,7 +8,7 @@ export default function TransactionHistory({ data }: { data: Transaction[] }) {
 
   return (
     <>
-      <button className="btn btn-outline" onClick={() => setIsModalOpen(true)}>
+      <button className="block mx-auto my-4 btn btn-outline" onClick={() => setIsModalOpen(true)}>
         View History
       </button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

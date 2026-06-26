@@ -94,7 +94,7 @@ export default function TransactionForm({
     <>
       <form
         onSubmit={handleSubmit}
-        className="grid bg-base-200 border-base-300 rounded-box w-xs border p-4 shadow-md"
+        className="grid bg-base-200 border-base-300 mx-auto rounded-box w-xs border p-4 shadow-md"
       >
         <fieldset className="fieldset my-2 gap-4">
           <legend className="fieldset-legend text-center font-bold text-sm">
