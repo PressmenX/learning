@@ -1,21 +1,27 @@
 import clsx from "clsx";
 import useToggle from "../common/hooks/useToggle";
 import { StickyNote } from "lucide-react";
+import useEscapeKey from "../common/hooks/useEscapeKey";
 
 export default function UserList() {
-  const [status, toggle] = useToggle();
+  const [isModalOpen, , setModalOpen, setModalClose] = useToggle();
+  useEscapeKey(isModalOpen, setModalClose)
 
+ 
   return (
     <>
-      <button className="btn btn-primary" onClick={toggle}>
+      <button className="btn btn-primary" onClick={setModalOpen}>
         Users
       </button>
 
-      <div className={clsx("modal", { "modal-open": status })} role="dialog">
+      <div
+        className={clsx("modal", { "modal-open": isModalOpen })}
+        role="dialog"
+      >
         <div className="modal-box max-w-sm">
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            onClick={toggle}
+            onClick={setModalClose}
           >
             ✕
           </button>
@@ -31,7 +37,7 @@ export default function UserList() {
             </p>
           </div>
         </div>
-        <div className="modal-backdrop" onClick={toggle}></div>
+        <div className="modal-backdrop" onClick={setModalClose}></div>
       </div>
     </>
   );
