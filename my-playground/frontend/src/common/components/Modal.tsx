@@ -1,5 +1,3 @@
-import clsx from "clsx";
-import type { HTMLAttributes } from "react";
 import type React from "react";
 import cn from "../utils/cn";
 
@@ -8,6 +6,8 @@ interface ModalProps {
   onCloseModal: () => void;
   title: string;
   children: React.ReactNode;
+  className?: string;
+  contentClassName?: string;
 }
 
 export default function Modal({
@@ -16,10 +16,14 @@ export default function Modal({
   children,
   title,
   className,
-}: ModalProps & HTMLAttributes<HTMLDivElement>) {
+  contentClassName,
+}: ModalProps) {
   return (
-    <div className={clsx("modal", { "modal-open": isModalOpen })} role="dialog">
-      <div className={cn("modal-box max-w-sm", className)}>
+    <div
+      className={cn("modal", { "modal-open": isModalOpen }, className)}
+      role="dialog"
+    >
+      <div className={cn("modal-box max-w-sm", contentClassName)}>
         <button
           className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           onClick={onCloseModal}

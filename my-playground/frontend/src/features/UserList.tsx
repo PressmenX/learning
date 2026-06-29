@@ -9,7 +9,7 @@ export default function UserList() {
 
   return (
     <>
-      <button className="btn btn-primary" onClick={setModalOpen}>
+      <button className="btn btn-primary m-4" onClick={setModalOpen}>
         Users
       </button>
 
