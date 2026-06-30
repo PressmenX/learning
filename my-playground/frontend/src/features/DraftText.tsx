@@ -1,22 +1,15 @@
-import {  useState, type ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
+import useLocalStorage from "../common/hooks/useLocalStorage";
+import { Eraser, RotateCcw } from "lucide-react";
 
 export default function DraftText() {
-  const [text, setText] = useState<string>(() => {
-    try {
-      return localStorage.getItem("draft-note") ?? "";
-    } catch {
-      return "";
-    }
-  });
+  const [text, setText, clearText] = useLocalStorage(
+    "draft-note",
+    "New blank note",
+  );
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = e.target;
-    setText(value);
-    try {
-      localStorage.setItem("draft-note", value);
-    } catch {
-      console.error("Error while saving")
-    }
+    setText(e.target.value);
   };
 
   return (
@@ -44,6 +37,26 @@ export default function DraftText() {
 
         <div className="flex justify-between items-center px-1 text-xs text-base-content/40">
           <span>Draft is saved automatically</span>
+
+          <div>
+            <div className="tooltip" data-tip="Reset Content">
+              <button
+                className="btn btn-ghost btn-sm btn-square"
+                onClick={() => setText("")}
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="tooltip" data-tip="Clear note data">
+              <button
+                className="btn btn-ghost btn-sm btn-square"
+                onClick={clearText}
+              >
+                <Eraser className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>
