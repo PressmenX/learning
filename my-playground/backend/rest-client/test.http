@@ -4,4 +4,4 @@ GET {{url}}/health
 
 ###
 
-GET {{url}}
+GET {{url}}/users
