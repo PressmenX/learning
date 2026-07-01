@@ -6,6 +6,11 @@ import { HttpErrorFilter } from './core/filters/http-error.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: ['http://localhost:5173'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpErrorFilter());
   app.enableShutdownHooks();

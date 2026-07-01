@@ -6,8 +6,8 @@ export default function App() {
   return (
     <>
       <UserList />
-      <PasswordInput/>
-      <DraftText/>
+      <PasswordInput />
+      <DraftText />
     </>
   );
 }
