@@ -14,21 +14,35 @@ export default function UserList() {
   useEscapeKey(isModalOpen, setModalClose);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchUsers = async () => {
       try {
         setLoading(true);
 
-        const res = await axios.get("http://localhost:3000/users");
+        const res = await axios.get("http://localhost:3000/users", {
+          signal: controller.signal,
+        });
         setUsers(res.data.result ?? []);
       } catch (err) {
-        setError("Error: User data failed to retrieve");
-        console.log(err);
+        if (axios.isCancel(err)) {
+          console.log("Request aborted:", err);
+        } else {
+          console.error("API ERROR : ", err);
+          setError(
+            "Failed to load data. Please check your connection and try again.",
+          );
+        }
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchUsers();
+
+    return () => controller.abort();
   }, []);
 
   return (
