@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, ConflictException, Controller, Get, Post } from '@nestjs/common';
 
 import { GetAllUsersUseCase } from './use-cases/get-all-users.use-case';
 import { CreateUserUseCase } from './use-cases/create-user.use-case';
 import { CreateUserDto } from './DTOs/create-user.dto';
+import { EmailAlreadyExistError } from './errors/email-already-exist.error';
 
 @Controller('users')
 export class UserController {
@@ -18,6 +19,13 @@ export class UserController {
 
   @Post()
   create(@Body() dto: CreateUserDto) {
-    return this.createUser.execute(dto);
+    try {
+      return this.createUser.execute(dto);
+    } catch (err) {
+      if (err instanceof EmailAlreadyExistError) {
+        throw new ConflictException(err.message);
+      }
+      throw err;
+    }
   }
 }

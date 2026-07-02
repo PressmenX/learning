@@ -4,6 +4,7 @@ import { TransformInterceptor } from './core/interceptors/transform.interceptor'
 import { HttpErrorFilter } from './core/filters/http-error.filter';
 import { Logger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -17,6 +18,7 @@ async function bootstrap() {
   });
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpErrorFilter());
+  app.useGlobalPipes(new ValidationPipe());
   app.enableShutdownHooks();
 
   await app.listen(configService.get<number>('port') ?? 3000);

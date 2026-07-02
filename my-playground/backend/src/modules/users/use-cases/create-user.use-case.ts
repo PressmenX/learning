@@ -1,7 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepositoryAbstract } from '../interfaces/user.repository.abstract';
 import { CreateUserDto } from '../DTOs/create-user.dto';
 import { Prisma } from '../../../generated/prisma/client';
+import { EmailAlreadyExistError } from '../errors/email-already-exist.error';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -13,7 +14,7 @@ export class CreateUserUseCase {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ConflictException('Email sudah digunakan');
+          throw new EmailAlreadyExistError();
         }
       }
       throw error;
