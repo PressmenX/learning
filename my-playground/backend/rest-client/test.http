@@ -1,7 +1,16 @@
 @url = http://localhost:3000
 
+### Health check
 GET {{url}}/health
 
-###
-
+### Ambil semua user
 GET {{url}}/users
+
+### Tambah user baru
+POST {{url}}/users
+Content-Type: application/json
+
+{
+  "email": "affah@example.com",
+  "name": "Affah"
+}
