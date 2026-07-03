@@ -14,6 +14,7 @@ export default function UserList() {
   useEscapeKey(isModalOpen, setModalClose);
 
   useEffect(() => {
+    if (!isModalOpen) return
     const controller = new AbortController();
 
     const fetchUsers = async () => {
@@ -43,7 +44,7 @@ export default function UserList() {
     fetchUsers();
 
     return () => controller.abort();
-  }, []);
+  }, [isModalOpen]);
 
   return (
     <>
