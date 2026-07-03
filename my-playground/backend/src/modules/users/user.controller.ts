@@ -13,12 +13,12 @@ export class UserController {
   ) {}
 
   @Get()
-  getAll() {
+  async getAll() {
     return this.getAllUsers.execute();
   }
 
   @Post()
-  create(@Body() dto: CreateUserDto) {
+  async create(@Body() dto: CreateUserDto) {
     try {
       return this.createUser.execute(dto);
     } catch (err) {
