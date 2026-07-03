@@ -33,7 +33,7 @@ export default function UserListContent({
 
   return (
     <>
-      <ul className="list bg-base-100 rounded-box shadow-md max-w-md border border-base-300">
+      <ul className="list bg-base-100 rounded-box shadow-md max-w-md max-h-100 border border-base-300 overflow-auto">
         {users.map((user) => (
           <li
             key={user.id}
