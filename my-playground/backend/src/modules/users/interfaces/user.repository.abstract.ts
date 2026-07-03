@@ -4,4 +4,5 @@ import { IUser } from './user.interface';
 export abstract class UserRepositoryAbstract {
   abstract findAll(): Promise<IUser[]>;
   abstract save(payload: CreateUserDto): Promise<IUser>;
+  abstract remove(id: number): Promise<IUser>;
 }

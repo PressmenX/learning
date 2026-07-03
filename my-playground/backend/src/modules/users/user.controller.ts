@@ -1,15 +1,24 @@
-import { Body, ConflictException, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 
 import { GetAllUsersUseCase } from './use-cases/get-all-users.use-case';
 import { CreateUserUseCase } from './use-cases/create-user.use-case';
 import { CreateUserDto } from './DTOs/create-user.dto';
-import { EmailAlreadyExistError } from './errors/email-already-exist.error';
+import { DeleteUserUseCase } from './use-cases/delete-user.use-case';
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly getAllUsers: GetAllUsersUseCase,
     private readonly createUser: CreateUserUseCase,
+    private readonly deleteUser: DeleteUserUseCase,
   ) {}
 
   @Get()
@@ -19,13 +28,16 @@ export class UserController {
 
   @Post()
   async create(@Body() dto: CreateUserDto) {
-    try {
-      return this.createUser.execute(dto);
-    } catch (err) {
-      if (err instanceof EmailAlreadyExistError) {
-        throw new ConflictException(err.message);
-      }
-      throw err;
-    }
+    return await this.createUser.execute(dto);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    const res = await this.deleteUser.execute(id);
+
+    return {
+      message: `User with id ${res.id} has been successfully deleted.`,
+      data: '',
+    };
   }
 }

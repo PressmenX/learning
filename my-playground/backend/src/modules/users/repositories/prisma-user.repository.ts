@@ -20,4 +20,12 @@ export class PrismaUserRepository implements UserRepositoryAbstract {
       },
     });
   }
+
+  async remove(id: number): Promise<IUser> {
+    return await this.prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

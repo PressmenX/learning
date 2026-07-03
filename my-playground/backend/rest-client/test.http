@@ -14,3 +14,7 @@ Content-Type: application/json
   "email": "affah@example.com",
   "name": "Affah"
 }
+
+###
+
+DELETE {{url}}/users/10
