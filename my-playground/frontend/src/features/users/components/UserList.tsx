@@ -1,10 +1,10 @@
-import useToggle from "../../common/hooks/useToggle";
-import useEscapeKey from "../../common/hooks/useEscapeKey";
-import Modal from "../../common/components/Modal";
+import useToggle from "../../../common/hooks/useToggle";
+import useEscapeKey from "../../../common/hooks/useEscapeKey";
+import Modal from "../../../common/components/Modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { type IUser } from "../../common/interfaces/user";
-import UserListContent from "./components/UserListContent";
+import { type IUser } from "../../../common/interfaces/user";
+import UserListContent from "./UserListContent";
 
 export default function UserList() {
   const [isModalOpen, , setModalOpen, setModalClose] = useToggle();
