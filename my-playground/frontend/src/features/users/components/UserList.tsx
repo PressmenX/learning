@@ -39,6 +39,7 @@ export default function UserList() {
         const res = await axios.get("http://localhost:3000/users", {
           signal: controller.signal,
         });
+
         setUsers(res.data.result ?? []);
       } catch (err) {
         if (axios.isCancel(err)) {
@@ -68,7 +69,7 @@ export default function UserList() {
       </button>
 
       <Modal
-        isModalOpen={true}
+        isModalOpen={isModalOpen}
         onCloseModal={setModalClose}
         title="Users"
       >

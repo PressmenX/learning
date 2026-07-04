@@ -22,6 +22,11 @@ export class PrismaUserRepository implements UserRepositoryAbstract {
   }
 
   async remove(id: number): Promise<IUser> {
+    await this.prisma.post.deleteMany({
+      where: {
+        author_id: id,
+      },
+    });
     return await this.prisma.user.delete({
       where: {
         id,
