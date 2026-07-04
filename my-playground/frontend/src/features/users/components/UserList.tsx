@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { type IUser } from "../../../common/interfaces/user";
 import UserListContent from "./UserListContent";
-import { ImageUp } from "lucide-react";
 
 export default function UserList() {
   const [isModalOpen, , setModalOpen, setModalClose] = useToggle();
@@ -13,13 +12,14 @@ export default function UserList() {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   useEscapeKey(isModalOpen, setModalClose);
+  const [deletedMessage, setDeletedMessage] = useState("");
 
   const handleUserDelete = (id: number) => {
     const deleteUser = async () => {
       try {
         const res = await axios.delete(`http://localhost:3000/users/${id}`);
-
-        setUsers(users.filter((u) => u.id !== id));
+        setUsers((prevUsers)=> prevUsers.filter((u) => u.id !== id));
+        setDeletedMessage(res.data.message)
       } catch (err) {
         console.log(err);
       }
@@ -62,17 +62,23 @@ export default function UserList() {
     return () => controller.abort();
   }, [isModalOpen]);
 
+useEffect(() => {
+  if (deletedMessage) {
+    const timer = setTimeout(() => {
+      setDeletedMessage("");
+    }, 3000); 
+
+    return () => clearTimeout(timer); 
+  }
+}, [deletedMessage]);
+
   return (
     <>
       <button className="btn btn-primary m-4" onClick={setModalOpen}>
         Users
       </button>
 
-      <Modal
-        isModalOpen={isModalOpen}
-        onCloseModal={setModalClose}
-        title="Users"
-      >
+      <Modal isModalOpen={isModalOpen} onCloseModal={setModalClose} title="Users">
         <UserListContent
           users={users}
           isLoading={isLoading}
@@ -80,6 +86,11 @@ export default function UserList() {
           onDeleteUser={handleUserDelete}
         />
       </Modal>
+      {deletedMessage && (
+        <div className="alert alert-success alert-soft fixed z-[999] bottom-6 left-1/2 -translate-x-1/2">
+          {deletedMessage}
+        </div>
+      )}
     </>
   );
 }
