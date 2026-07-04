@@ -16,5 +16,4 @@ Content-Type: application/json
 }
 
 ###
-
 DELETE {{url}}/users/ab

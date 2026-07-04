@@ -5,21 +5,28 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { type IUser } from "../../../common/interfaces/user";
 import UserListContent from "./UserListContent";
+import { useFetch } from "../../../common/hooks/useFetch";
 
 export default function UserList() {
   const [isModalOpen, , setModalOpen, setModalClose] = useToggle();
-  const [users, setUsers] = useState<IUser[]>([]);
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   useEscapeKey(isModalOpen, setModalClose);
   const [deletedMessage, setDeletedMessage] = useState("");
+  const {
+    data: users,
+    setData: setUsers,
+    isLoading,
+    error,
+  } = useFetch<IUser[]>("http://localhost:3000/users", {
+    defaultValue: [],
+    enabled: isModalOpen,
+  });
 
   const handleUserDelete = (id: number) => {
     const deleteUser = async () => {
       try {
         const res = await axios.delete(`http://localhost:3000/users/${id}`);
-        setUsers((prevUsers)=> prevUsers.filter((u) => u.id !== id));
-        setDeletedMessage(res.data.message)
+        setUsers((prevUsers) => prevUsers.filter((u) => u.id !== id));
+        setDeletedMessage(res.data.message);
       } catch (err) {
         console.log(err);
       }
@@ -29,48 +36,14 @@ export default function UserList() {
   };
 
   useEffect(() => {
-    if (!isModalOpen) return;
-    const controller = new AbortController();
+    if (deletedMessage) {
+      const timer = setTimeout(() => {
+        setDeletedMessage("");
+      }, 3000);
 
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-
-        const res = await axios.get("http://localhost:3000/users", {
-          signal: controller.signal,
-        });
-
-        setUsers(res.data.result ?? []);
-      } catch (err) {
-        if (axios.isCancel(err)) {
-          console.log("Request aborted:", err);
-        } else {
-          console.error("API ERROR : ", err);
-          setError(
-            "Failed to load data. Please check your connection and try again.",
-          );
-        }
-      } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchUsers();
-
-    return () => controller.abort();
-  }, [isModalOpen]);
-
-useEffect(() => {
-  if (deletedMessage) {
-    const timer = setTimeout(() => {
-      setDeletedMessage("");
-    }, 3000); 
-
-    return () => clearTimeout(timer); 
-  }
-}, [deletedMessage]);
+      return () => clearTimeout(timer);
+    }
+  }, [deletedMessage]);
 
   return (
     <>
@@ -78,7 +51,11 @@ useEffect(() => {
         Users
       </button>
 
-      <Modal isModalOpen={isModalOpen} onCloseModal={setModalClose} title="Users">
+      <Modal
+        isModalOpen={isModalOpen}
+        onCloseModal={setModalClose}
+        title="Users"
+      >
         <UserListContent
           users={users}
           isLoading={isLoading}
@@ -87,7 +64,7 @@ useEffect(() => {
         />
       </Modal>
       {deletedMessage && (
-        <div className="alert alert-success alert-soft fixed z-[999] bottom-6 left-1/2 -translate-x-1/2">
+        <div className="alert alert-success alert-soft fixed z-999 bottom-6 left-1/2 -translate-x-1/2">
           {deletedMessage}
         </div>
       )}
