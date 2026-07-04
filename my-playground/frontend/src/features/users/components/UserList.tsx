@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { type IUser } from "../../../common/interfaces/user";
 import UserListContent from "./UserListContent";
+import { ImageUp } from "lucide-react";
 
 export default function UserList() {
   const [isModalOpen, , setModalOpen, setModalClose] = useToggle();
@@ -13,8 +14,22 @@ export default function UserList() {
   const [error, setError] = useState("");
   useEscapeKey(isModalOpen, setModalClose);
 
+  const handleUserDelete = (id: number) => {
+    const deleteUser = async () => {
+      try {
+        const res = await axios.delete(`http://localhost:3000/users/${id}`);
+
+        setUsers(users.filter((u) => u.id !== id));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    deleteUser();
+  };
+
   useEffect(() => {
-    if (!isModalOpen) return
+    if (!isModalOpen) return;
     const controller = new AbortController();
 
     const fetchUsers = async () => {
@@ -53,11 +68,16 @@ export default function UserList() {
       </button>
 
       <Modal
-        isModalOpen={isModalOpen}
+        isModalOpen={true}
         onCloseModal={setModalClose}
         title="Users"
       >
-        <UserListContent users={users} isLoading={isLoading} error={error} />
+        <UserListContent
+          users={users}
+          isLoading={isLoading}
+          error={error}
+          onDeleteUser={handleUserDelete}
+        />
       </Modal>
     </>
   );

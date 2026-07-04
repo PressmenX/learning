@@ -17,4 +17,4 @@ Content-Type: application/json
 
 ###
 
-DELETE {{url}}/users/10
+DELETE {{url}}/users/2

@@ -1,4 +1,4 @@
-import { CircleX } from "lucide-react";
+import { CircleX, Trash } from "lucide-react";
 import EmptyState from "../../../common/components/EmptyState";
 import type { IUser } from "../../../common/interfaces/user";
 
@@ -6,13 +6,19 @@ interface UserListContentProps {
   users: IUser[];
   isLoading: boolean;
   error: string;
+  onDeleteUser: (id: number) => void;
 }
 
 export default function UserListContent({
   users,
   isLoading,
   error,
+  onDeleteUser,
 }: UserListContentProps) {
+  const handleUserDelete = (id: number) => {
+    onDeleteUser(id);
+  };
+
   if (isLoading)
     return (
       <div className="grid place-items-center gap-3 p-4">
@@ -37,7 +43,7 @@ export default function UserListContent({
         {users.map((user) => (
           <li
             key={user.id}
-            className="list-row p-4 flex items-center gap-4 border-b border-base-200 last:border-b-0"
+            className="list-row p-4 flex items-center justify-between gap-4 border-b border-base-200 last:border-b-0"
           >
             <div className="avatar avatar-placeholder">
               <div className="bg-neutral text-neutral-content w-10 rounded-full">
@@ -46,12 +52,20 @@ export default function UserListContent({
                 </span>
               </div>
             </div>
-            <div className="flex flex-col gap-0.5">
+
+            <div className="flex flex-col flex-1 gap-0.5">
               <p className="font-semibold text-base-content text-sm">
-                {user.name ?? "-"}
+                {user.name || "-"}
               </p>
               <p className="text-xs text-base-content/60">{user.email}</p>
             </div>
+
+            <button
+              className="btn btn-ghost btn-circle btn-sm text-error/70 hover:text-error hover:bg-error/10 transition-colors"
+              onClick={() => handleUserDelete(user.id)}
+            >
+              <Trash size={18} />
+            </button>
           </li>
         ))}
       </ul>
