@@ -7,3 +7,29 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String  @db.VarChar(255)
+  content   String?
+  author_id Int?
+  User      User?   @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([title])
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  Post  Post[]
+}
+
+model Book {
+  id            String   @id @default(uuid())
+  title         String
+  author        String
+  publishedYear Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
