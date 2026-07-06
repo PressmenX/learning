@@ -1,0 +1,29 @@
+### Get All Books
+@bookId = a1b2c3d4-e5f6-7890-abcd-ef1234567890d
+GET http://localhost:3000/books
+
+### Get One Book by ID
+GET http://localhost:3000/books/{{bookId}}
+
+### Create Book
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "title": "Clean Architecture",
+  "author": "Robert C. Martin",
+  "publishedYear": 2017
+}
+
+### Update Book
+PATCH http://localhost:3000/books/{{bookId}}
+Content-Type: application/json
+
+{
+  "title": "Clean Architecture (Updated)",
+  "author": "Uncle Bob",
+  "publishedYear": 2018
+}
+
+### Delete Book
+DELETE http://localhost:3000/books/{{bookId}}

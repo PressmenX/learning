@@ -30,23 +30,9 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
   }
 
   async update(id: string, payload: UpdateBookDto): Promise<Book | null> {
-    const data: Partial<Pick<Book, 'title' | 'author' | 'publishedYear'>> = {};
-
-    if (payload.title !== undefined) {
-      data.title = payload.title;
-    }
-
-    if (payload.author !== undefined) {
-      data.author = payload.author;
-    }
-
-    if (payload.publishedYear !== undefined) {
-      data.publishedYear = payload.publishedYear;
-    }
-
     return await this.prisma.book.update({
       where: { id },
-      data,
+      data: payload,
     });
   }
 
