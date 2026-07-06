@@ -1,5 +1,5 @@
 ### Get All Books
-@bookId = a1b2c3d4-e5f6-7890-abcd-ef1234567890d
+@bookId = a1b2c3d4-e5f6-7890-abcd-ef1234567890
 GET http://localhost:3000/books
 
 ### Get One Book by ID
@@ -10,9 +10,9 @@ POST http://localhost:3000/books
 Content-Type: application/json
 
 {
-  "title": "Clean Architecture",
-  "author": "Robert C. Martin",
-  "publishedYear": 2017
+  "title": "The Pragmatic Programmer",
+  "author": "Andrew Hunt & David Thomas",
+  "publishedYear": 1999
 }
 
 ### Update Book
@@ -20,10 +20,11 @@ PATCH http://localhost:3000/books/{{bookId}}
 Content-Type: application/json
 
 {
-  "title": "Clean Architecture (Updated)",
-  "author": "Uncle Bob",
-  "publishedYear": 2018
+  "title": "The Pragmatic Programmer",
+  "author": "Andrew Hunt & David Thomas",
+  "publishedYear": 1999
 }
+
 
 ### Delete Book
 DELETE http://localhost:3000/books/{{bookId}}

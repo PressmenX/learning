@@ -29,14 +29,14 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
     });
   }
 
-  async update(id: string, payload: UpdateBookDto): Promise<Book | null> {
+  async update(id: string, payload: UpdateBookDto): Promise<Book> {
     return await this.prisma.book.update({
       where: { id },
       data: payload,
     });
   }
 
-  async remove(id: string): Promise<Book | null> {
+  async remove(id: string): Promise<Book> {
     return await this.prisma.book.delete({
       where: { id },
     });
