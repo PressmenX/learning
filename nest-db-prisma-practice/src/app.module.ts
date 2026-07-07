@@ -9,6 +9,7 @@ import { envConfig } from './core/config/env.config';
 import { HealthModule } from './modules/health/health.module';
 import { BookModule } from './modules/book/book.module';
 import { MemberModule } from './modules/member/member.module';
+import { PublisherModule } from './modules/publisher/publisher.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MemberModule } from './modules/member/member.module';
     HealthModule,
     BookModule,
     MemberModule,
+    PublisherModule,
   ],
   controllers: [AppController],
   providers: [AppService],

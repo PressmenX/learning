@@ -6,6 +6,7 @@ import BookRepositoryAbstract from './repositories/book.repository.abstract';
 import { Prisma } from '../../generated/prisma/client';
 import { BookAlreadyExistsError } from './errors/book-already-exist.error';
 import { BookNotFoundError } from './errors/book-not-found.error';
+import { PublisherNotFoundError } from '../publisher/errors/publisher-not-found.error';
 
 @Injectable()
 export class BookService {
@@ -18,6 +19,10 @@ export class BookService {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2002') {
           throw new BookAlreadyExistsError();
+        }
+
+        if (err.code === 'P2003') {
+          throw new PublisherNotFoundError();
         }
 
         throw new InternalServerErrorException(err.message);
@@ -47,6 +52,10 @@ export class BookService {
 
         if (err.code === 'P2002') {
           throw new BookAlreadyExistsError();
+        }
+
+        if (err.code === 'P2003') {
+          throw new PublisherNotFoundError();
         }
 
         throw new InternalServerErrorException(err.message);

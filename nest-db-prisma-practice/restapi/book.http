@@ -12,7 +12,8 @@ Content-Type: application/json
 {
   "title": "The Pragmatic Programmer",
   "author": "Andrew Hunt & David Thomas",
-  "publishedYear": 1999
+  "publishedYear": 1999,
+  "publisherId" : "903b4d2a-59e4-4a01-bdba-6d368877044"
 }
 
 ### Update Book
@@ -22,7 +23,8 @@ Content-Type: application/json
 {
   "title": "The Pragmatic Programmer",
   "author": "Andrew Hunt & David Thomas",
-  "publishedYear": 1999
+  "publishedYear": 1999,
+  "publisherId" : "903b4d2a-59e4-4a01-bdba-6d368877044"
 }
 
 

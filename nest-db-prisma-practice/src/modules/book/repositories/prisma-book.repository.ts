@@ -21,11 +21,7 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
 
   async save(payload: CreateBookDto): Promise<Book> {
     return await this.prisma.book.create({
-      data: {
-        title: payload.title,
-        author: payload.author,
-        publishedYear: payload.publishedYear,
-      },
+      data: payload,
     });
   }
 

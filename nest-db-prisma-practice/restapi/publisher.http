@@ -1,0 +1,30 @@
+### Health Check
+GET http://localhost:3000/health/check
+
+### Get All Publishers
+GET http://localhost:3000/publishers
+
+### Get One Publisher by ID
+@publisherId = 6c25a6ed-7f1b-4690-8ef7-674a98f2fe72
+GET http://localhost:3000/publishers/{{publisherId}}
+
+### Create Publisher
+POST http://localhost:3000/publishers
+Content-Type: application/json
+
+{
+  "name": "Gramedia",
+  "city": "Jakarta"
+}
+
+### Update Publisher
+PATCH http://localhost:3000/publishers/{{publisherId}}
+Content-Type: application/json
+
+{
+  "name": "  Gramedia ",
+  "city": "Bandung"
+}
+
+### Delete Publisher
+DELETE http://localhost:3000/publishers/{{publisherId}}

@@ -11,4 +11,7 @@ export class CreateBookDto {
   @Min(1000)
   @Max(new Date().getFullYear())
   publishedYear!: number;
+
+  @IsString()
+  publisherId!: string;
 }
