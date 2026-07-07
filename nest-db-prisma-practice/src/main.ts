@@ -15,7 +15,13 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
   app.useGlobalFilters(new HttpErrorFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
   app.enableShutdownHooks();
 
   await app.listen(configService.get('PORT') ?? 3000);

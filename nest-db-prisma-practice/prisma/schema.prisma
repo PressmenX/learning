@@ -36,6 +36,15 @@ model Book {
   @@unique([title, author, publishedYear])
 }
 
+model Publisher {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  city      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
 model Member {
   id        String   @id @default(uuid())
   email     String   @unique

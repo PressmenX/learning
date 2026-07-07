@@ -1,0 +1,30 @@
+### Get All Members
+@memberId = 6b5146ba-abe4-473b-b034-da81e71e7421
+GET http://localhost:3000/members
+
+### Get One Member by ID
+GET http://localhost:3000/members/{{memberId}}
+
+### Create Member
+POST http://localhost:3000/members
+Content-Type: application/json
+
+ {
+    "email": "john.doe@example.com",
+    "fullName": "John Doe",
+    "isActive": true
+  }
+
+### Update Member
+PATCH http://localhost:3000/members/{{memberId}}
+Content-Type: application/json
+
+{
+    "email": "daffa@example.com",
+    "fullName": "Daffa Alfin",
+    "isActive": true
+  }
+
+
+### Delete Member
+DELETE http://localhost:3000/members/{{memberId}}
