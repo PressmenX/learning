@@ -26,12 +26,14 @@ model User {
 }
 
 model Book {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   title         String
   author        String
   publishedYear Int
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  publisherId   String    @default("6c25a6ed-7f1b-4690-8ef7-674a98f2fe72")
+  publisher     Publisher @relation(fields: [publisherId], references: [id])
 
   @@unique([title, author, publishedYear])
 }
@@ -42,8 +44,8 @@ model Publisher {
   city      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  book      Book[]
 }
-
 
 model Member {
   id        String   @id @default(uuid())

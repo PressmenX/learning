@@ -1,7 +1,8 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client';
 import 'dotenv/config';
-import { members } from './seed/members';
+import { seedPublishers } from './seed/publishers';
+import { books } from './seed/books';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({
@@ -24,11 +25,11 @@ async function generate<T>(data: T[], handler: SeedHandler<T>) {
 }
 
 async function seed() {
-  await generate(members, (member) =>
-    prisma.member.upsert({
-      where: { email: member.email },
-      create: member,
-      update: member,
+  await generate(books, (data) =>
+    prisma.book.upsert({
+      where: { id: data.id },
+      create: data,
+      update: data,
     }),
   );
 }
