@@ -26,14 +26,15 @@ model User {
 }
 
 model Book {
-  id            String    @id @default(uuid())
+  id            String     @id @default(uuid())
   title         String
   author        String
   publishedYear Int
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  publisherId   String   
-  publisher     Publisher @relation(fields: [publisherId], references: [id])
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  publisherId   String
+  publisher     Publisher  @relation(fields: [publisherId], references: [id])
+  categories    Category[]
 
   @@unique([title, author, publishedYear])
 }
@@ -44,7 +45,7 @@ model Publisher {
   city      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  books      Book[]
+  books     Book[]
 }
 
 model Member {
@@ -54,4 +55,11 @@ model Member {
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String @unique
+
+  books Book[]
 }

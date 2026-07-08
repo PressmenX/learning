@@ -1,3 +1,6 @@
+import { PrismaClient } from '../../src/generated/prisma/client';
+import { SeedHandler } from '../types';
+
 export const books = [
   {
     id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
@@ -27,3 +30,29 @@ export const books = [
     updatedAt: new Date().toISOString(),
   },
 ];
+
+export const generateBooks = async (
+  prisma: PrismaClient,
+  generate: (
+    data: typeof books,
+    seedHandler: SeedHandler<(typeof books)[number]>,
+  ) => Promise<void>,
+) => {
+  const cat = await prisma.category.findMany();
+  await generate(books, (data) =>
+    prisma.book.upsert({
+      where: { id: data.id },
+      create: {
+        ...data,
+        categories: { connect: [{ id: cat[0].id }, { id: cat[1].id }] },
+      },
+      update: {
+        ...data,
+        categories: {
+          set: [],
+          connect: [{ id: cat[0].id }, { id: cat[1].id }],
+        },
+      },
+    }),
+  );
+};

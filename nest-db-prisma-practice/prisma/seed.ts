@@ -1,16 +1,14 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client';
 import 'dotenv/config';
-import { seedPublishers } from './seed/publishers';
 import { books } from './seed/books';
+import { SeedHandler } from './types';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({
   adapter,
   log: ['query', 'info', 'warn', 'error'],
 });
-
-type SeedHandler<T> = (item: T) => Promise<unknown>;
 
 async function generate<T>(data: T[], handler: SeedHandler<T>) {
   console.time('Seeding Database');
@@ -24,15 +22,7 @@ async function generate<T>(data: T[], handler: SeedHandler<T>) {
   console.timeEnd('Seeding Database');
 }
 
-async function seed() {
-  await generate(books, (data) =>
-    prisma.book.upsert({
-      where: { id: data.id },
-      create: data,
-      update: data,
-    }),
-  );
-}
+async function seed() {}
 
 seed()
   .then(async () => {
