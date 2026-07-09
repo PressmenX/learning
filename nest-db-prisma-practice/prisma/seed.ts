@@ -1,7 +1,7 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client';
 import 'dotenv/config';
-import { books } from './seed/books';
+import { books, generateBooks } from './seed/books';
 import { SeedHandler } from './types';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
@@ -22,7 +22,9 @@ async function generate<T>(data: T[], handler: SeedHandler<T>) {
   console.timeEnd('Seeding Database');
 }
 
-async function seed() {}
+async function seed() {
+  await generateBooks(prisma, generate);
+}
 
 seed()
   .then(async () => {
