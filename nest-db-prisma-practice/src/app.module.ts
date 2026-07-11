@@ -10,6 +10,7 @@ import { HealthModule } from './modules/health/health.module';
 import { BookModule } from './modules/book/book.module';
 import { MemberModule } from './modules/member/member.module';
 import { PublisherModule } from './modules/publisher/publisher.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PublisherModule } from './modules/publisher/publisher.module';
     BookModule,
     MemberModule,
     PublisherModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

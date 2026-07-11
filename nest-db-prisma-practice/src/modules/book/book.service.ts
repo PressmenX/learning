@@ -7,6 +7,7 @@ import { Prisma } from '../../generated/prisma/client';
 import { BookAlreadyExistsError } from './errors/book-already-exist.error';
 import { BookNotFoundError } from './errors/book-not-found.error';
 import { PublisherNotFoundError } from '../publisher/errors/publisher-not-found.error';
+import { CategoryNotFoundError } from '../category/errors/category-not-found.error';
 
 @Injectable()
 export class BookService {
@@ -23,6 +24,10 @@ export class BookService {
 
         if (err.code === 'P2003') {
           throw new PublisherNotFoundError();
+        }
+
+        if (err.code === 'P2025') {
+          throw new CategoryNotFoundError();
         }
 
         throw new InternalServerErrorException(err.message);
@@ -43,6 +48,16 @@ export class BookService {
 
   async update(id: string, updateBookDto: UpdateBookDto): Promise<Book> {
     try {
+      const { categoryIds } = updateBookDto;
+
+      if (categoryIds) {
+        const categories =
+          await this.bookRepository.findCategories(categoryIds);
+        if (categoryIds.length !== categories.length) {
+          throw new CategoryNotFoundError();
+        }
+      }
+
       return await this.bookRepository.update(id, updateBookDto);
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {

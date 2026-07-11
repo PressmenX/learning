@@ -4,6 +4,8 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '../../generated/prisma/client';
+import { CategoryNotFoundError } from './errors/category-not-found.error';
+import { CategoryAlreadyExistsError } from './errors/category-already-exists.error';
 
 @Injectable()
 export class CategoryService {
@@ -14,7 +16,7 @@ export class CategoryService {
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2002') {
-          // C
+          throw new CategoryAlreadyExistsError();
         }
         throw new InternalServerErrorException(err.message);
       }
@@ -27,10 +29,13 @@ export class CategoryService {
   }
 
   async findOne(id: string): Promise<Category | null> {
-    const data = await this.prisma.category.findUnique({ where: { id } });
+    const data = await this.prisma.category.findUnique({
+      where: { id },
+      include: { books: true },
+    });
 
     if (!data) {
-      // NF
+      throw new CategoryNotFoundError();
     }
 
     return data;
@@ -42,10 +47,10 @@ export class CategoryService {
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2002') {
-          // C
+          throw new CategoryAlreadyExistsError();
         }
         if (err.code === 'P2025') {
-          // NF
+          throw new CategoryNotFoundError();
         }
         throw new InternalServerErrorException(err.message);
       }
@@ -59,7 +64,7 @@ export class CategoryService {
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
-          // NF
+          throw new CategoryNotFoundError();
         }
         throw new InternalServerErrorException(err.message);
       }

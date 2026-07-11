@@ -1,4 +1,11 @@
-import { IsString, IsInt, Min, Max } from 'class-validator';
+import {
+  IsString,
+  IsInt,
+  Min,
+  Max,
+  IsArray,
+  IsOptional,
+} from 'class-validator';
 
 export class CreateBookDto {
   @IsString()
@@ -14,4 +21,9 @@ export class CreateBookDto {
 
   @IsString()
   publisherId!: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  categoryIds?: string[];
 }

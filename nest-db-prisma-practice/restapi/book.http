@@ -10,10 +10,11 @@ POST http://localhost:3000/books
 Content-Type: application/json
 
 {
-  "title": "The Pragmatic Programmer",
+  "title": "The DevOps",
   "author": "Andrew Hunt & David Thomas",
   "publishedYear": 1999,
-  "publisherId" : "903b4d2a-59e4-4a01-bdba-6d368877044"
+  "publisherId" : "6c25a6ed-7f1b-4690-8ef7-674a98f2fe72",
+  "categoryIds" : ["dc161a2f-cbc7-441b-9e6d-a67772c3d74c"]
 }
 
 ### Update Book
@@ -21,10 +22,7 @@ PATCH http://localhost:3000/books/{{bookId}}
 Content-Type: application/json
 
 {
-  "title": "The Pragmatic Programmer",
-  "author": "Andrew Hunt & David Thomas",
-  "publishedYear": 1999,
-  "publisherId" : "903b4d2a-59e4-4a01-bdba-6d368877044"
+ "categoryIds" : ["dc161a2f-cbc7-441b-9e6d-a67772c3d74c"]
 }
 
 

@@ -1,0 +1,28 @@
+### Health Check
+GET http://localhost:3000/health/check
+
+### Get All Categories
+GET http://localhost:3000/categories
+
+### Get One Category by ID
+@categoryId = 1896b274-72d6-4759-ab27-03538bea4997
+GET http://localhost:3000/categories/{{categoryId}}
+
+### Create Category
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "name": "Novel"
+}
+
+### Update Category
+PATCH http://localhost:3000/categories/{{categoryId}}
+Content-Type: application/json
+
+{
+  "name": "Educ"
+}
+
+### Delete Category
+DELETE http://localhost:3000/categories/{{categoryId}}
