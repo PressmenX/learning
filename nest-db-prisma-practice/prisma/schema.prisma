@@ -26,15 +26,17 @@ model User {
 }
 
 model Book {
-  id            String     @id @default(uuid())
+  id            String    @id @default(uuid())
   title         String
   author        String
   publishedYear Int
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   publisherId   String
-  publisher     Publisher  @relation(fields: [publisherId], references: [id])
-  categories    Category[]
+  publisher     Publisher @relation(fields: [publisherId], references: [id])
+
+  categories       Category[]
+  currentBorrowers Member[]
 
   @@unique([title, author, publishedYear])
 }
@@ -55,6 +57,8 @@ model Member {
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  borrowedBooks Book[]
 }
 
 model Category {
