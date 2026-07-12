@@ -4,6 +4,10 @@ GET http://localhost:3000/health/check
 ### Get All Categories
 GET http://localhost:3000/categories
 
+### Bad Get All Categories
+GET http://localhost:3000/categories/bad
+
+
 ### Get One Category by ID
 @categoryId = 1896b274-72d6-4759-ab27-03538bea4997
 GET http://localhost:3000/categories/{{categoryId}}

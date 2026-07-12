@@ -41,7 +41,7 @@ export class PrismaService
 
     safePrisma.$on('query', (e) => {
       if (this.isEnableLog) {
-        console.log(e.query);
+        this.logger.log(e.query);
       }
     });
   }

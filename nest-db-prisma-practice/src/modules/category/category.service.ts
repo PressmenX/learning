@@ -24,8 +24,24 @@ export class CategoryService {
     }
   }
 
+  async badFindAll(): Promise<Category[]> {
+    const categories = await this.prisma.category.findMany();
+
+    const categoriesWithBooks = await Promise.all(
+      categories.map(async (cat) => {
+        const books = await this.prisma.book.findMany({
+          where: { categories: { some: { id: cat.id } } },
+        });
+
+        return { ...cat, books };
+      }),
+    );
+
+    return categoriesWithBooks;
+  }
+
   async findAll(): Promise<Category[]> {
-    return await this.prisma.category.findMany();
+    return await this.prisma.category.findMany({ include: { books: true } });
   }
 
   async findOne(id: string): Promise<Category | null> {

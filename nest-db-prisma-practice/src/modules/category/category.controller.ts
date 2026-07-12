@@ -22,6 +22,12 @@ export class CategoryController {
     return await this.categoryService.create(createCategoryDto);
   }
 
+  @Get('/bad')
+  @UseInterceptors(PrismaLogInterceptor)
+  async badFindAll() {
+    return await this.categoryService.badFindAll();
+  }
+
   @Get()
   @UseInterceptors(PrismaLogInterceptor)
   async findAll() {
