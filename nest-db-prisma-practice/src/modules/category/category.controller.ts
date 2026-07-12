@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { PrismaLogInterceptor } from '../../core/interceptors/prisma-log.interceptor';
 
 @Controller('categories')
 export class CategoryController {
@@ -21,6 +23,7 @@ export class CategoryController {
   }
 
   @Get()
+  @UseInterceptors(PrismaLogInterceptor)
   async findAll() {
     return await this.categoryService.findAll();
   }

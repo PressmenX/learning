@@ -14,6 +14,7 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   private readonly logger = new Logger(PrismaService.name);
+  protected isEnableLog = false;
 
   constructor(private readonly configService: ConfigService) {
     const databaseUrl = configService.get<string>('DATABASE_URL');
@@ -26,7 +27,30 @@ export class PrismaService
       connectionString: databaseUrl,
     });
 
-    super({ adapter, log: ['query'] });
+    super({
+      adapter,
+      log: [{ emit: 'event', level: 'query' }],
+    });
+
+    const safePrisma = this as {
+      $on: (
+        event: 'query',
+        callback: (event: { query: string }) => void,
+      ) => void;
+    };
+
+    safePrisma.$on('query', (e) => {
+      if (this.isEnableLog) {
+        console.log(e.query);
+      }
+    });
+  }
+
+  enablePrismaLog() {
+    this.isEnableLog = true;
+  }
+  disablePrismaLog() {
+    this.isEnableLog = false;
   }
 
   async onModuleInit() {
