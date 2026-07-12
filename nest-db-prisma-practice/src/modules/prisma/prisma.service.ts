@@ -26,7 +26,7 @@ export class PrismaService
       connectionString: databaseUrl,
     });
 
-    super({ adapter });
+    super({ adapter, log: ['query'] });
   }
 
   async onModuleInit() {

@@ -1,4 +1,10 @@
-import { IsEmail, IsString, IsOptional, IsBoolean } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsBoolean,
+  IsArray,
+} from 'class-validator';
 
 export class CreateMemberDto {
   @IsEmail()
@@ -10,4 +16,9 @@ export class CreateMemberDto {
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  borrowedBookIds?: string[];
 }
