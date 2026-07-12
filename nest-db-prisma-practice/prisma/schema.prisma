@@ -59,6 +59,9 @@ model Member {
   updatedAt DateTime @updatedAt
 
   borrowedBooks Book[]
+
+  @@index([email])
+  @@index([fullName])
 }
 
 model Category {
