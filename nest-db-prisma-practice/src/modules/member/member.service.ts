@@ -12,6 +12,16 @@ import { BookNotFoundError } from '../book/errors/book-not-found.error';
 export class MemberService {
   constructor(private readonly memberRepository: MemberRepositoryAbstract) {}
 
+  async findByEmail(email: string) {
+    const member = await this.memberRepository.findByEmail(email);
+    if (!member) throw new MemberNotFoundError();
+    return member;
+  }
+
+  async findByFullName(fullName: string) {
+    return await this.memberRepository.findByFullname(fullName);
+  }
+
   async findAll(): Promise<Member[]> {
     return await this.memberRepository.findAll();
   }

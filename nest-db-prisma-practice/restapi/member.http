@@ -5,6 +5,12 @@ GET http://localhost:3000/members
 ### Get One Member by ID
 GET http://localhost:3000/members/{{memberId}}
 
+### Get by email
+GET http://localhost:3000/members/search/email?email=daffa@example.com
+
+### GET by fullname
+GET http://localhost:3000/members/search/fullName?fullName=John%20Doe
+
 ### Create Member
 POST http://localhost:3000/members
 Content-Type: application/json

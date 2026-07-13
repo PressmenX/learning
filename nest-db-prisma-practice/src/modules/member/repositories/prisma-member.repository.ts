@@ -10,6 +10,17 @@ import { Book } from '../../book/entities';
 export class PrismaMemberRepository implements MemberRepositoryAbstract {
   constructor(private readonly prisma: PrismaService) {}
 
+  async findByEmail(email: string): Promise<Member | null> {
+    return await this.prisma.member.findUnique({
+      where: { email },
+      include: { borrowedBooks: true },
+    });
+  }
+
+  async findByFullname(fullName: string): Promise<Member[]> {
+    return await this.prisma.member.findMany({ where: { fullName } });
+  }
+
   async findBooks(ids: string[]): Promise<Book[]> {
     return await this.prisma.book.findMany({ where: { id: { in: ids } } });
   }

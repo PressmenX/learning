@@ -10,4 +10,6 @@ export abstract class MemberRepositoryAbstract {
   abstract update(id: string, payload: UpdateMemberDto): Promise<Member>;
   abstract remove(id: string): Promise<Member>;
   abstract findBooks(ids: string[]): Promise<Book[]>;
+  abstract findByEmail(email: string): Promise<Member | null>;
+  abstract findByFullname(fullName: string): Promise<Member[]>;
 }
