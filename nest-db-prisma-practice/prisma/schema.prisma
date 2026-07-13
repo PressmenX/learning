@@ -65,8 +65,9 @@ model Member {
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String @unique
+  id    String @id @default(uuid())
+  name  String @unique
+  color String @default("white")
 
   books Book[]
 }
