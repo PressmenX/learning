@@ -28,17 +28,23 @@ export class TransformInterceptor implements NestInterceptor {
       map((data: unknown) => {
         let customMessage: string | undefined;
         let resultData: unknown = data;
+        let restData: Record<string, unknown> = {};
 
         if (data && typeof data === 'object') {
-          const dataObj = data as Record<string, unknown>;
+          const { result, message, ...dataObj } = data as Record<
+            string,
+            unknown
+          >;
 
-          if (typeof dataObj.message === 'string') {
-            customMessage = dataObj.message;
+          if (typeof message === 'string') {
+            customMessage = message;
           }
 
-          if (dataObj.data !== undefined) {
-            resultData = dataObj.data;
+          if (result !== undefined) {
+            resultData = result;
           }
+
+          restData = dataObj;
         }
 
         return {
@@ -48,6 +54,7 @@ export class TransformInterceptor implements NestInterceptor {
           message:
             customMessage ?? messageMapping[method] ?? 'Operation successful',
           result: resultData,
+          ...restData,
         };
       }),
     );
