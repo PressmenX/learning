@@ -5,6 +5,7 @@ import { CreateBookDto } from '../dto/create-book.dto';
 import { UpdateBookDto } from '../dto/update-book.dto';
 import BookRepositoryAbstract from './book.repository.abstract';
 import { Category } from '../../category/entities';
+import { GetBookQueryDto } from '../dto/get-book-query.dto';
 
 @Injectable()
 export class PrismaBookRepository implements BookRepositoryAbstract {
@@ -14,8 +15,30 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
     return this.prisma.category.findMany({ where: { id: { in: ids } } });
   }
 
-  async findAll(): Promise<Book[]> {
-    return await this.prisma.book.findMany();
+  async findAll(
+    query: GetBookQueryDto,
+  ): Promise<Book[] | Record<string, unknown>> {
+    const { page = 1, limit = 10 } = query;
+    const skipPage = (page - 1) * limit;
+
+    const [data, totalData] = await Promise.all([
+      this.prisma.book.findMany({ skip: skipPage, take: limit }),
+      this.prisma.book.count(),
+    ]);
+
+    const totalPages = Math.ceil(totalData / limit);
+
+    return {
+      meta: {
+        currentPage: page,
+        limit: limit,
+        totalData: totalData,
+        totalPages: totalPages,
+        hasNextPage: page < totalPages,
+        hasPreviousPage: page > 1,
+      },
+      result: data,
+    };
   }
 
   async findOne(id: string): Promise<Book | null> {

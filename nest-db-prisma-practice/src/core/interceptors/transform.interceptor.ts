@@ -51,10 +51,10 @@ export class TransformInterceptor implements NestInterceptor {
           statusCode,
           status: 'success',
           endpoint: `${method} ${req.url}`,
+          ...restData,
           message:
             customMessage ?? messageMapping[method] ?? 'Operation successful',
           result: resultData,
-          ...restData,
         };
       }),
     );

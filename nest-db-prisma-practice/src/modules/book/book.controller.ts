@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities';
+import { GetBookQueryDto } from './dto/get-book-query.dto';
 
 @Controller('books')
 export class BookController {
@@ -22,8 +24,8 @@ export class BookController {
   }
 
   @Get()
-  async findAll(): Promise<Book[]> {
-    return await this.bookService.findAll();
+  async findAll(@Query() query: GetBookQueryDto) {
+    return await this.bookService.findAll(query);
   }
 
   @Get(':id')

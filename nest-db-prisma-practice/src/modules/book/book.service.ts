@@ -8,6 +8,7 @@ import { BookAlreadyExistsError } from './errors/book-already-exist.error';
 import { BookNotFoundError } from './errors/book-not-found.error';
 import { PublisherNotFoundError } from '../publisher/errors/publisher-not-found.error';
 import { CategoryNotFoundError } from '../category/errors/category-not-found.error';
+import { GetBookQueryDto } from './dto/get-book-query.dto';
 
 @Injectable()
 export class BookService {
@@ -36,8 +37,8 @@ export class BookService {
     }
   }
 
-  async findAll(): Promise<Book[]> {
-    return this.bookRepository.findAll();
+  async findAll(query: GetBookQueryDto) {
+    return this.bookRepository.findAll(query);
   }
 
   async findOne(id: string): Promise<Book> {
