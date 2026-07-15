@@ -6,6 +6,7 @@ import { UpdateBookDto } from '../dto/update-book.dto';
 import BookRepositoryAbstract from './book.repository.abstract';
 import { Category } from '../../category/entities';
 import { GetBookQueryDto } from '../dto/get-book-query.dto';
+import { BookWhereInput } from '../../../generated/prisma/models';
 
 @Injectable()
 export class PrismaBookRepository implements BookRepositoryAbstract {
@@ -23,11 +24,24 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
       limit = 10,
       sortBy = 'createdAt',
       sortOrder = 'desc',
+      author,
+      title,
     } = query;
     const skipPage = (page - 1) * limit;
 
+    const where: BookWhereInput = {};
+
+    if (author) {
+      where.author = { contains: author, mode: 'insensitive' };
+    }
+
+    if (title) {
+      where.title = { contains: title, mode: 'insensitive' };
+    }
+
     const [data, totalData] = await Promise.all([
       this.prisma.book.findMany({
+        where,
         skip: skipPage,
         take: limit,
         orderBy: { [sortBy]: sortOrder },
