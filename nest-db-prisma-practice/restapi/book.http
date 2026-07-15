@@ -1,6 +1,6 @@
 ### Get All Books
 @bookId = a1b2c3d4-e5f6-7890-abcd-ef1234567890
-GET http://localhost:3000/books?limit=10&page=2
+GET http://localhost:3000/books?limit=10&page=1&sortOrder=desc&sortBy=title
 
 ### Get One Book by ID
 GET http://localhost:3000/books/{{bookId}}

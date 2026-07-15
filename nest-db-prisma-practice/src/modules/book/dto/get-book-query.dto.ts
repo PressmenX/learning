@@ -1,4 +1,4 @@
-import { IsInt, IsOptional, Max, Min } from 'class-validator';
+import { IsIn, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 export class GetBookQueryDto {
   @IsOptional()
@@ -13,4 +13,14 @@ export class GetBookQueryDto {
   @Min(1)
   @Max(100)
   limit?: number = 10;
+
+  @IsOptional()
+  @IsString()
+  @IsIn(['createdAt', 'title'])
+  sortBy?: string = 'createdAt';
+
+  @IsOptional()
+  @IsString()
+  @IsIn(['asc', 'desc'])
+  sortOrder?: 'asc' | 'desc' = 'desc';
 }

@@ -18,11 +18,20 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
   async findAll(
     query: GetBookQueryDto,
   ): Promise<Book[] | Record<string, unknown>> {
-    const { page = 1, limit = 10 } = query;
+    const {
+      page = 1,
+      limit = 10,
+      sortBy = 'createdAt',
+      sortOrder = 'desc',
+    } = query;
     const skipPage = (page - 1) * limit;
 
     const [data, totalData] = await Promise.all([
-      this.prisma.book.findMany({ skip: skipPage, take: limit }),
+      this.prisma.book.findMany({
+        skip: skipPage,
+        take: limit,
+        orderBy: { [sortBy]: sortOrder },
+      }),
       this.prisma.book.count(),
     ]);
 
