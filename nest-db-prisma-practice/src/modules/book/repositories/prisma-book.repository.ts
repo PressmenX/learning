@@ -29,7 +29,7 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
     } = query;
     const skipPage = (page - 1) * limit;
 
-    const where: BookWhereInput = {};
+    const where: BookWhereInput = { deletedAt: null };
 
     if (author) {
       where.author = { contains: author, mode: 'insensitive' };
@@ -86,7 +86,7 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
   async update(id: string, payload: UpdateBookDto): Promise<Book> {
     const { categoryIds, ...data } = payload;
     return await this.prisma.book.update({
-      where: { id },
+      where: { id, deletedAt: null },
       data: {
         ...data,
         categories: categoryIds
@@ -99,8 +99,9 @@ export class PrismaBookRepository implements BookRepositoryAbstract {
   }
 
   async remove(id: string): Promise<Book> {
-    return await this.prisma.book.delete({
-      where: { id },
+    return await this.prisma.book.update({
+      where: { id, deletedAt: null },
+      data: { deletedAt: new Date().toISOString() },
     });
   }
 }

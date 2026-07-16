@@ -30,7 +30,12 @@ export class TransformInterceptor implements NestInterceptor {
         let resultData: unknown = data;
         let restData: Record<string, unknown> = {};
 
-        if (data && typeof data === 'object') {
+        const isWrappedPayload =
+          data !== null &&
+          typeof data === 'object' &&
+          ('result' in data || 'message' in data || 'meta' in data);
+
+        if (isWrappedPayload) {
           const { result, message, ...dataObj } = data as Record<
             string,
             unknown
